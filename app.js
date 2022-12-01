@@ -1,4 +1,5 @@
 const express = require("express");
+const flash = require('connect-flash');
 const path = require("path");
 var methodOverride = require('method-override');
 var engine = require('ejs-mate');
@@ -27,9 +28,19 @@ const app = express();
 app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(__dirname + '/public'));
 
 app.use(express.urlencoded({extended:true}));
-app.use(methodOverride('_method'))
+app.use(methodOverride('_method'));
+// app.use(flash());
+
+
+// app.use((req, res, next) => {
+//     res.locals.currentUser = req.user;
+//     res.locals.success = req.flash('success');
+//     res.locals.error = req.flash('error');
+//     next();
+// })
 
 // set listen port
 app.listen(3000, ()=>{
